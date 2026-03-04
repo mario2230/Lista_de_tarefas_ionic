@@ -1,0 +1,7 @@
+{
+  "name": "meuApp-04/03",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "vue-vite"
+}
