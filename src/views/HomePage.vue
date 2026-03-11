@@ -2,29 +2,19 @@
   <ion-page>
     <ion-header :translucent="true">
       <ion-toolbar>
-        <ion-title>Blank</ion-title>
+        <ion-title>Seu Aplicativo</ion-title>
       </ion-toolbar>
     </ion-header>
 
     <ion-content :fullscreen="true">
       <ion-header collapse="condense">
-        <ion-toolbar>
-          <ion-title size="large">Blank</ion-title>
-        </ion-toolbar>
       </ion-header>
 
-      <ion-input v-model="nome"></ion-input>
-      <div>O nome é {{  nome  }}</div>
+      <div><p>Este aplicativo serve para ser sua agenda pessoal! no botão abaixo você pode utilizar no sistema! </p></div>
 
-      <div><ion-button :disabled="valor == 18" @click="incrementa()">Adicionar</ion-button></div>
-      
-      <div>Sua idade {{ valor }}</div>
-
-      <div v-if="valor == 18">Você se fudeu</div>
-     
 
       <div>
-        <p>Quer mudar de pagina?</p>
+        <p>Quer ir para as tarefas?</p>
         <ion-button @click='router.push("/tarefas")'>Ir para tarefas</ion-button>
       </div>
     </ion-content>
@@ -33,16 +23,8 @@
 
 <script setup lang="ts">
 import router from '@/router';
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonInput } from '@ionic/vue';
-import { ref } from 'vue';
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/vue';
 
-
-const valor = ref(0);
-const nome = ref("");
-
-const incrementa = () => {
-  valor.value++;
-}
 
 </script>
 
