@@ -10,10 +10,20 @@
         <ion-content :fullscreen="true">
             <div>
                 <h1>Suas tarefas</h1>
-                <h2>Quantidades de tarefas {{  tarefa  }}</h2>
+                <h2>Quantidades de tarefas {{  tarefaQuantidade  }}</h2>
             </div>
-            <ion-input @click="adicionarTarefa()">Tarefa ++</ion-input>
+            <ion-input v-model="conteudoTarefa" placeholder="Digite a sua tarefa"></ion-input>
+            <ion-button @click="adicionarTarefa()">Adicionar a tarefa</ion-button>
             <ion-button @click='router.push("/home")'>Ir para pagina inicial</ion-button>
+
+            <div v-for="(tarefa, index) in tarefaLista" :key="index">
+             <ion-item><ion-label>  {{ tarefa }} <ion-button @click="removerTarefa(index)">Remover</ion-button> </ion-label></ion-item> 
+            </div>
+            
+
+            <div v-if=" tarefaQuantidade === 0">
+                Nenhuma tarefa cadastrada. Adicione a primeira!
+            </div>
         </ion-content>
     </ion-page>
 </template>
@@ -21,14 +31,29 @@
 
 <script setup lang="ts"> 
 import router from '@/router';  
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonInput } from '@ionic/vue';
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonInput, IonButton } from '@ionic/vue';
 import { ref } from 'vue';
 
+const tarefaQuantidade = ref(0);
+const tarefaLista = ref<string[]>([]);
+const conteudoTarefa = ref("");
 
-const tarefa = ref(0);
+const removerTarefa = (index:number) => {
+    tarefaLista.value.splice(index, 1)
+    tarefaQuantidade.value--;
+}
 
 const adicionarTarefa = () => {
-    tarefa.value++;
+
+    if(conteudoTarefa.value.trim() === "") {
+        return
+    }
+
+    tarefaLista.value.push(conteudoTarefa.value);
+
+    tarefaQuantidade.value++;
+
+    conteudoTarefa.value = "";
 }
 </script>
 
