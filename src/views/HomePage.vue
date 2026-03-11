@@ -10,7 +10,7 @@
       <ion-header collapse="condense">
       </ion-header>
 
-      <div><p>Este aplicativo serve para ser sua agenda pessoal! no botão abaixo você pode utilizar no sistema! </p></div>
+      <div><p>Este aplicativo serve para ser sua agenda pessoal! no botão abaixo você pode utilizar nosso sistema! </p></div>
 
 
       <div>
