@@ -22,7 +22,7 @@
             
 
             <div v-if=" tarefaQuantidade === 0">
-                Nenhuma tarefa cadastrada. Adicione a primeira!
+                Nenhuma tarefa cadastrada. Adicione a primeira
             </div>
         </ion-content>
     </ion-page>
