@@ -17,12 +17,12 @@
             <ion-button @click='router.push("/home")'>Ir para pagina inicial</ion-button>
 
             <div v-for="(tarefa, index) in tarefaLista" :key="index">
-             <ion-item><ion-label>  {{ tarefa }} <ion-button @click="removerTarefa(index)">Remover</ion-button> </ion-label></ion-item> 
+             <ion-item><ion-label>  {{ tarefa }} <ion-button @click="removerTarefa(index)"><ion-icon :icon="trashOutline" /></ion-button> </ion-label></ion-item> 
             </div>
             
 
             <div v-if=" tarefaQuantidade === 0">
-                Nenhuma tarefa cadastrada. Adicione a primeira
+                Nenhuma tarefa cadastrada. Adicione a primeira!
             </div>
         </ion-content>
     </ion-page>
@@ -31,8 +31,9 @@
 
 <script setup lang="ts"> 
 import router from '@/router';  
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonInput, IonButton } from '@ionic/vue';
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonInput, IonButton, IonIcon } from '@ionic/vue';
 import { ref } from 'vue';
+import { trashOutline } from 'ionicons/icons';
 
 const tarefaQuantidade = ref(0);
 const tarefaLista = ref<string[]>([]);
