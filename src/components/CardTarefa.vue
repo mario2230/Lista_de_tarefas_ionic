@@ -1,4 +1,12 @@
 <script setup lang='ts'>
+import {
+  IonCard,
+  IonCardContent,
+  IonItem,
+  IonIcon,
+  IonLabel,
+  IonButton
+} from '@ionic/vue'
 import { checkmarkCircle, ellipseOutline, trashOutline } from 'ionicons/icons'
 interface Tarefa { id: number; texto: string; feita: boolean }
 
