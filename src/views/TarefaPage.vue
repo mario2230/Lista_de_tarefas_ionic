@@ -13,9 +13,9 @@ import {
 
 import { addOutline } from 'ionicons/icons'
 
-const { tarefas, busca, filtroAtivo, filtradas, 
-totalPendentes, adicionar, remover, concluir } = useTarefas() 
-
+const {  filtradas, 
+ adicionar, remover, concluir } = useTarefas() 
+/* tarefas, busca, filtroAtivo, totalPendentes, */
 const novaTarefa = ref('')
 
 function adicionarNova() {
