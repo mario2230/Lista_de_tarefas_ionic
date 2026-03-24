@@ -1,112 +1,97 @@
-<template>
-    <ion-page>
-        <ion-header :translucent="true">
-            <ion-toolbar>
-                <ion-title>Tarefas</ion-title>
-            </ion-toolbar>
-        </ion-header>
-
-        <ion-content :fullscreen="true">
-
-       
-            <ion-card>
-                <ion-card-header>
-                    <ion-card-title>Nova Tarefa</ion-card-title>
-                </ion-card-header>
-
-                <ion-card-content>
-                    <ion-input
-                        v-model="conteudoTarefa"
-                        label="Nome da tarefa"
-                        label-placement="floating"
-                        :clear-input="true"
-                        placeholder="Ex: Estudar Vue.js"
-                        :error-text="erroTarefa"
-                        :class="{'ion-invalid ion-touched': erroTarefa}"
-                    ></ion-input>
-
-                    <ion-button expand="block" fill="solid" color="primary" @click="adicionarTarefa">
-                        <ion-icon slot="start" :icon="addOutline" />
-                        Adicionar tarefa
-                    </ion-button>
-                </ion-card-content>
-            </ion-card>
-
-            <ion-card>
-                <ion-card-header>
-                    <ion-card-title>
-                        Minhas Tarefas ({{ tarefaLista.length }})
-                    </ion-card-title>
-                </ion-card-header>
-
-                <ion-card-content>
-
-                    <ion-list>
-                        <ion-item v-for="(tarefa, index) in tarefaLista" :key="index">
-                            
-                            <ion-icon slot="start" :icon="checkmarkCircleOutline" />
-
-                            <ion-label>{{ tarefa }}</ion-label>
-
-                            <ion-button
-                                slot="end"
-                                fill="clear"
-                                color="danger"
-                                @click="removerTarefa(index)"
-                            >
-                                <ion-icon :icon="trashOutline" />
-                            </ion-button>
-
-                        </ion-item>
-                    </ion-list>
-
-                    <p v-if="tarefaLista.length === 0" class="ion-text-center ion-padding">
-                        Nenhuma tarefa cadastrada.
-                    </p>
-
-                </ion-card-content>
-            </ion-card>
-
-             <div>
-        <p>Quer ir para as home?</p>
-        <ion-button @click='router.push("/home")'>Ir para home</ion-button>
-      </div>
-        </ion-content>
-    </ion-page>
-</template>
-
 <script setup lang="ts">
-import router from '@/router';
+import { ref } from 'vue'
+import router from '@/router'
+
+import { useTarefas } from '@/composable/useTarefas'
+import CardTarefa from '@/components/CardTarefa.vue'
+
 import {
-    IonCard, IonCardContent, IonCardHeader, IonCardTitle,
-    IonContent, IonHeader, IonPage, IonTitle, IonToolbar,
-    IonInput, IonButton, IonIcon, IonList, IonItem, IonLabel
-} from '@ionic/vue';
+  IonCard, IonCardContent, IonCardHeader, IonCardTitle,
+  IonContent, IonHeader, IonPage, IonTitle, IonToolbar,
+  IonInput, IonButton, IonIcon
+} from '@ionic/vue'
 
-import { ref, computed } from 'vue';
-import { addOutline, trashOutline, checkmarkCircleOutline } from 'ionicons/icons';
+import { addOutline } from 'ionicons/icons'
 
-const tarefaLista = ref<string[]>([]);
-const conteudoTarefa = ref("");
+const {  filtradas, 
+ adicionar, remover, concluir } = useTarefas() 
+/* tarefas, busca, filtroAtivo, totalPendentes, */
+const novaTarefa = ref('')
 
-const erroTarefa = computed(() =>
-    !conteudoTarefa.value.trim() ? "Campo obrigatório" : ""
-);
-
-const adicionarTarefa = () => {
-    if (conteudoTarefa.value.trim() === "") return;
-
-    tarefaLista.value.push(conteudoTarefa.value);
-    conteudoTarefa.value = "";
-};
-
-const removerTarefa = (index: number) => {
-    tarefaLista.value.splice(index, 1);
-};
+function adicionarNova() {
+  adicionar(novaTarefa.value)
+  novaTarefa.value = ''
+}
 </script>
+
+<template>
+  <ion-page>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Tarefas</ion-title>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content>
+
+      <!-- NOVA TAREFA -->
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>Nova Tarefa</ion-card-title>
+        </ion-card-header>
+
+        <ion-card-content>
+          <ion-input
+            v-model="novaTarefa"
+            label="Nome da tarefa"
+            label-placement="floating"
+            placeholder="Ex: Estudar Vue.js"
+          />
+
+          <ion-button expand="block" @click="adicionarNova">
+            <ion-icon slot="start" :icon="addOutline" />
+            Adicionar tarefa
+          </ion-button>
+        </ion-card-content>
+      </ion-card>
+
+
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>
+            Minhas Tarefas ({{ filtradas.length }})
+          </ion-card-title>
+        </ion-card-header>
+
+        <ion-card-content>
+
+          <CardTarefa
+            v-for="tarefa in filtradas"
+            :key="tarefa.id"
+            :tarefa="tarefa"
+            @remover="remover"
+            @concluir="concluir"
+          />
+
+          <p v-if="filtradas.length === 0" class="ion-text-center ion-padding">
+            Nenhuma tarefa cadastrada.
+          </p>
+
+        </ion-card-content>
+      </ion-card>
+
+      <div class="ion-padding">
+        <ion-button @click="router.push('/home')">
+          Ir para home
+        </ion-button>
+      </div>
+
+    </ion-content>
+  </ion-page>
+</template>
 
 <style scoped>
 ion-card {
-    margin: 16px;
+  margin: 16px;
 }
 </style>
