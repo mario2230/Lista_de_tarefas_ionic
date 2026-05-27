@@ -14,10 +14,6 @@ export function useTarefas() {
     const busca = ref('')
     const filtroAtivo = ref<'todas' | 'pendentes' | 'feitas'>('todas')
     // computed: filtra por texto de busca E pelo filtro ativo 
-
-
-
-
     
     const filtradas = computed(() => {
         const termo = busca.value.toLowerCase()
@@ -30,7 +26,7 @@ export function useTarefas() {
             })
 })
 
-// computed: total de pendentes 
+
 const totalPendentes = computed( 
 () => tarefas.value.filter(t => !t.feita).length 
 )
